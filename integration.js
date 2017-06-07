@@ -28,7 +28,19 @@ function doLookup(entities, options, cb) {
         }
 
         async.each(entities, function (entityObj, next) {
-            if (entityObj.isIPv4) {
+            if (entityObj.isDomain) {
+                /* TODO: prepend domain with "TDOM:" */
+                /* TODO: is there a way to handle wildcards here? */
+                _lookupEntity(entityObj, options, function (err, result) {
+                    if (err) {
+                        next(err);
+                    } else {
+                        lookupResults.push(result);
+                        next(null);
+                    }
+                });
+            else if (entityObj.isIPv4) {
+                /* TODO: prepend address with "TIP:" */
                 _lookupIp(entityObj, options, function (err, result) {
                     if (err) {
                         next(err);
@@ -62,6 +74,7 @@ function _initRedisClient(integrationOptions, cb) {
             host: integrationOptions.host,
             port: integrationOptions.port,
             database: integrationOptions.database
+            password: integrationOptions.password
         };
     }
 
@@ -69,12 +82,14 @@ function _initRedisClient(integrationOptions, cb) {
         host: integrationOptions.host,
         port: integrationOptions.port,
         database: integrationOptions.database
+        password: integrationOptions.password
     };
 
     if (typeof client === 'undefined' || _optionsHaveChanged(clientOptions, newOptions)) {
         clientOptions = newOptions;
         _closeRedisClient(client, function(){
             client = redis.createClient(clientOptions);
+            /* is this necessary when the database is passed in clientOptions? */
             client.select(integrationOptions.database, function(err){
                 if(err){
                     Logger.error({err:err}, 'Error Changing Database');
@@ -198,6 +213,14 @@ function validateOptions(userOptions, cb) {
         errors.push({
             key: 'database',
             message: 'You must provide the Redis database you are connecting to'
+        })
+    }
+
+    if (typeof userOptions.password.value !== 'string' ||
+        (typeof userOptions.password.value === 'string' && userOptions.password.value.length === 0)) {
+        errors.push({
+            key: 'password',
+            message: 'You must provide the Redis authorization password'
         })
     }
 

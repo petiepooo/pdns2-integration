@@ -5,7 +5,7 @@ module.exports = {
      * @type String
      * @required
      */
-    "name": "Redis Example",
+    "name": "pDNS2 Integration",
     /**
      * The acronym that appears in the notification window when information from this integration
      * is displayed.  Note that the acronym is included as part of each "tag" in the summary information
@@ -17,14 +17,14 @@ module.exports = {
      */
     "acronym":"RED",
     "logging": {level: 'info'},
-    "entityTypes": ['IPv4'],
+    "entityTypes": ['IPv4', 'Domain'],
     /**
      * Description for this integration which is displayed in the Polarity integrations user interface
      *
      * @type String
      * @optional
      */
-    "description": "This is a sample integration that connects to a Redis instance",
+    "description": "This integration connects to a Redis instance containing pDNS2 threat intelligence",
     /**
      * An array of style files (css or less) that will be included for your integration. Any styles specified in
      * the below files can be used in your custom template.
@@ -83,6 +83,15 @@ module.exports = {
             "description": "The redis database you are connecting to",
             "default": "0",
             "type": "number",
+            "userCanEdit": false,
+            "adminOnly": true
+        },
+        {
+            "key": "password",
+            "name": "Authorization Password",
+            "description": "The authorization string to access the redis database",
+            "default": "",
+            "type": "text",
             "userCanEdit": false,
             "adminOnly": true
         }
