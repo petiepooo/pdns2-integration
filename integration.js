@@ -163,7 +163,7 @@ function _lookupEntity(entityObj, redisKey, options, cb) {
  * @private
  */
 function _doRedisLookup(entityValue, cb) {
-    client.get(entityValue, cb);
+    client.hgetall(entityValue, cb);
 }
 
 /**
