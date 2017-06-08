@@ -21,8 +21,8 @@ function doLookup(entities, options, cb) {
 
     Logger.trace({entities: entities}, 'doLookup');
 
-    _initRedisClient(options, function(err){
-        if(err){
+    _initRedisClient(options, function (err) {
+        if (err) {
             cb(err);
             return;
         }
@@ -87,28 +87,28 @@ function _initRedisClient(integrationOptions, cb) {
 
     if (typeof client === 'undefined' || _optionsHaveChanged(clientOptions, newOptions)) {
         clientOptions = newOptions;
-        _closeRedisClient(client, function(){
+        _closeRedisClient(client, function () {
             client = redis.createClient(clientOptions);
             /* is this necessary when the database is passed in clientOptions? */
-            client.select(integrationOptions.database, function(err){
-                if(err){
-                    Logger.error({err:err}, 'Error Changing Database');
+            client.select(integrationOptions.database, function (err) {
+                if (err) {
+                    Logger.error({err: err}, 'Error Changing Database');
                 }
-                Logger.info({con:clientOptions}, 'Created Redis Client');
+                Logger.info({con: clientOptions}, 'Created Redis Client');
                 cb(null);
             });
         });
-    }else{
+    } else {
         cb(null);
     }
 }
 
-function _closeRedisClient(myClient, cb){
-    if(typeof myClient !== 'undefined'){
+function _closeRedisClient(myClient, cb) {
+    if (typeof myClient !== 'undefined') {
         Logger.info("Closing Existing Redis Client");
         client.quit();
         client.on('end', cb);
-    }else{
+    } else {
         cb(null);
     }
 }
@@ -166,7 +166,7 @@ function _lookupIp(entityObj, options, cb) {
  * @param cb
  * @private
  */
-function _doRedisLookup(entityValue, cb){
+function _doRedisLookup(entityValue, cb) {
     client.get(entityValue, cb);
 }
 
@@ -178,7 +178,7 @@ function _doRedisLookup(entityValue, cb){
  * @param redisResult
  * @private
  */
-function _parseRedisResult(redisResult){
+function _parseRedisResult(redisResult) {
     return JSON.parse(redisResult);
 }
 
@@ -188,7 +188,7 @@ function _parseRedisResult(redisResult){
  * @param options
  */
 function validateOptions(userOptions, cb) {
-    Logger.debug({userOptions:userOptions}, 'Validating User Options');
+    Logger.debug({userOptions: userOptions}, 'Validating User Options');
 
     let errors = [];
 
