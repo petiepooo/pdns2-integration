@@ -5,7 +5,7 @@ module.exports = {
      * @type String
      * @required
      */
-    "name": "pDNS2 Integration",
+    "name": "pDNS2",
     /**
      * The acronym that appears in the notification window when information from this integration
      * is displayed.  Note that the acronym is included as part of each "tag" in the summary information
