@@ -212,14 +212,6 @@ function validateOptions(userOptions, cb) {
         })
     }
 
-    if (typeof userOptions.password.value !== 'string' ||
-        (typeof userOptions.password.value === 'string' && userOptions.password.value.length === 0)) {
-        errors.push({
-            key: 'password',
-            message: 'You must provide the Redis authorization password'
-        })
-    }
-
     cb(null, errors);
 }
 
