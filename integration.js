@@ -39,7 +39,7 @@ function doLookup(entities, options, cb) {
                         next(null);
                     }
                 });
-            else if (entityObj.isIPv4) {
+            } else if (entityObj.isIPv4) {
                 /* TODO: prepend address with "TIP:" */
                 _lookupIp(entityObj, options, function (err, result) {
                     if (err) {
