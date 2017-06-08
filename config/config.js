@@ -15,7 +15,7 @@ module.exports = {
      * @type String
      * @required
      */
-    "acronym":"RED",
+    "acronym":"PDNS",
     "logging": {level: 'info'},
     "entityTypes": ['IPv4', 'Domain'],
     /**
