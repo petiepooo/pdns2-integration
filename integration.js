@@ -84,7 +84,7 @@ function _initRedisClient(integrationOptions, cb) {
     };
 
     if(integrationOptions.password.length !== 0){
-        clientOptions.password = integrationOptions.password;
+        newOptions.password = integrationOptions.password;
     }
 
     if (typeof client === 'undefined' || _optionsHaveChanged(clientOptions, newOptions)) {
