@@ -28,20 +28,16 @@ function doLookup(entities, options, cb) {
         }
 
         async.each(entities, function (entityObj, next) {
+            let key = '';
+
             if (entityObj.isDomain) {
-                /* TODO: prepend domain with "TDOM:" */
-                /* TODO: is there a way to handle wildcards here? */
-                _lookupEntity(entityObj, options, function (err, result) {
-                    if (err) {
-                        next(err);
-                    } else {
-                        lookupResults.push(result);
-                        next(null);
-                    }
-                });
+                key = "TDOM:" + entityObj.value;
             } else if (entityObj.isIPv4) {
-                /* TODO: prepend address with "TIP:" */
-                _lookupIp(entityObj, options, function (err, result) {
+                key = "TIP:" + entityObj.value;
+            }
+
+            if(key.length > 0){
+                _lookupEntity(entityObj, key, options, function (err, result) {
                     if (err) {
                         next(err);
                     } else {
@@ -49,7 +45,7 @@ function doLookup(entities, options, cb) {
                         next(null);
                     }
                 });
-            } else {
+            }else{
                 next(null);
             }
         }, function (err) {
