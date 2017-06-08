@@ -175,7 +175,7 @@ function _doRedisLookup(entityValue, cb) {
  * @private
  */
 function _parseRedisResult(redisResult) {
-    return JSON.parse(redisResult);
+    return redisResult;
 }
 
 /**
