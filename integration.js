@@ -122,8 +122,8 @@ function _optionsHaveChanged(options1, options2) {
     return !_.isEqual(options1, options2);
 }
 
-function _lookupIp(entityObj, options, cb) {
-    _doRedisLookup(entityObj.value, function (err, result) {
+function _lookupEntity(entityObj, redisKey, options, cb) {
+    _doRedisLookup(redisKey, function (err, result) {
         if (err) {
             Logger.error({err: err}, 'Error running sql statement');
             cb(err);
