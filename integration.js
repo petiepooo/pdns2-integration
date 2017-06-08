@@ -69,30 +69,30 @@ function _initRedisClient(integrationOptions, cb) {
         clientOptions = {
             host: integrationOptions.host,
             port: integrationOptions.port,
-            database: integrationOptions.database
-            password: integrationOptions.password
+            db: integrationOptions.database
         };
+
+        if(integrationOptions.password.length !== 0){
+            clientOptions.password = integrationOptions.password;
+        }
     }
 
     let newOptions = {
         host: integrationOptions.host,
         port: integrationOptions.port,
-        database: integrationOptions.database
-        password: integrationOptions.password
+        db: integrationOptions.database
     };
+
+    if(integrationOptions.password.length !== 0){
+        clientOptions.password = integrationOptions.password;
+    }
 
     if (typeof client === 'undefined' || _optionsHaveChanged(clientOptions, newOptions)) {
         clientOptions = newOptions;
         _closeRedisClient(client, function () {
             client = redis.createClient(clientOptions);
-            /* is this necessary when the database is passed in clientOptions? */
-            client.select(integrationOptions.database, function (err) {
-                if (err) {
-                    Logger.error({err: err}, 'Error Changing Database');
-                }
-                Logger.info({con: clientOptions}, 'Created Redis Client');
-                cb(null);
-            });
+            Logger.info({con: clientOptions}, 'Created Redis Client');
+            cb(null);
         });
     } else {
         cb(null);
