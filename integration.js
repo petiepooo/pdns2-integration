@@ -91,7 +91,9 @@ function _initRedisClient(integrationOptions, cb) {
         clientOptions = newOptions;
         _closeRedisClient(client, function () {
             client = redis.createClient(clientOptions);
-            Logger.info({con: clientOptions}, 'Created Redis Client');
+            let logOptions = clientOptions;
+            logOptions.password = '..masked..';
+            Logger.info({con: logOptions}, 'Created Redis Client');
             cb(null);
         });
     } else {
