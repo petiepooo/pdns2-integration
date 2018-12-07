@@ -72,7 +72,7 @@ module.exports = {
             "key": "port",
             "name": "Database Port",
             "description": "The port your redis instance is listening on",
-            "default": "6379",
+            "default": 6379,
             "type": "number",
             "userCanEdit": false,
             "adminOnly": true
@@ -81,7 +81,7 @@ module.exports = {
             "key": "database",
             "name": "Database Id",
             "description": "The redis database you are connecting to",
-            "default": "0",
+            "default": 0,
             "type": "number",
             "userCanEdit": false,
             "adminOnly": true
